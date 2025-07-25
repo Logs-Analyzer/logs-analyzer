@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				cyber: {
+					primary: 'hsl(var(--cyber-primary))',
+					secondary: 'hsl(var(--cyber-secondary))',
+					accent: 'hsl(var(--cyber-accent))',
+					warning: 'hsl(var(--cyber-warning))',
+					danger: 'hsl(var(--cyber-danger))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -84,11 +91,33 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'glow': {
+					'0%, 100%': {
+						textShadow: '0 0 5px hsl(var(--cyber-primary)), 0 0 10px hsl(var(--cyber-primary)), 0 0 15px hsl(var(--cyber-primary))'
+					},
+					'50%': {
+						textShadow: '0 0 20px hsl(var(--cyber-primary)), 0 0 30px hsl(var(--cyber-primary)), 0 0 40px hsl(var(--cyber-primary))'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'glow': 'glow 2s ease-in-out infinite alternate',
+				'float': 'float 3s ease-in-out infinite'
+			},
+			backgroundImage: {
+				'gradient-cyber': 'var(--gradient-cyber)',
+				'gradient-dark': 'var(--gradient-dark)'
 			}
 		}
 	},
