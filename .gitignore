@@ -12,9 +12,12 @@ dist
 dist-ssr
 *.local
 
+<<<<<<< HEAD
 # Nested git repositories
 alert-tamer-ai/
 
+=======
+>>>>>>> origin/main
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
