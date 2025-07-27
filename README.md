@@ -1,4 +1,4 @@
-# Alert Tamer AI
+# LOGS ANALYZER
 
 > AI-powered log analysis and threat detection system
 
