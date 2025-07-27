@@ -1,73 +1,136 @@
-# Welcome to your Lovable project
+# Alert Tamer AI
 
-## Project info
+> AI-powered log analysis and threat detection system
 
-**URL**: https://lovable.dev/projects/c2f19943-a597-4c17-9a68-62564299d8df
+## 🚀 Overview
 
-## How can I edit this code?
+Alert Tamer AI is a sophisticated React-based application designed for intelligent log analysis and cybersecurity threat detection. Built with modern web technologies, it provides a comprehensive dashboard for monitoring, analyzing, and responding to security incidents.
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- **Dashboard** - Real-time monitoring and analytics overview
+- **Threat Analysis** - AI-powered threat detection and analysis
+- **Incident Response** - Streamlined incident management workflow
+- **Reports** - Comprehensive reporting and data visualization
+- **Settings** - Customizable configuration options
+- **Authentication** - Secure user authentication with Clerk
+- **Responsive Design** - Mobile-friendly interface with shadcn/ui components
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c2f19943-a597-4c17-9a68-62564299d8df) and start prompting.
+## 🛠️ Technologies Used
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui + Radix UI
+- **Authentication**: Clerk
+- **Icons**: Lucide React
+- **State Management**: React Query (TanStack Query)
+- **Form Handling**: React Hook Form
+- **Animation**: Framer Motion
 
-**Use your preferred IDE**
+## 🚀 Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js (v16 or higher)
+- npm or yarn package manager
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/TRIDYY/alert-tamer-ai.git
+   cd alert-tamer-ai
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+4. **Open your browser**
+   Navigate to `http://localhost:8080`
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## 📦 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── layout/         # Layout components (Header, Footer)
+│   └── ui/             # shadcn/ui components
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+├── pages/              # Page components
+└── main.tsx           # Application entry point
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The application uses Vite for building and development. Configuration can be found in:
 
-**Use GitHub Codespaces**
+- `vite.config.ts` - Vite configuration
+- `tailwind.config.ts` - Tailwind CSS configuration
+- `tsconfig.json` - TypeScript configuration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🚀 Deployment
 
-## What technologies are used for this project?
+### Build for Production
 
-This project is built with:
+```bash
+npm run build
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This creates a `dist` folder with optimized production files.
 
-## How can I deploy this project?
+### Deploy to Vercel
 
-Simply open [Lovable](https://lovable.dev/projects/c2f19943-a597-4c17-9a68-62564299d8df) and click on Share -> Publish.
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-## Can I connect a custom domain to my Lovable project?
+# Deploy
+vercel
+```
 
-Yes, you can!
+### Deploy to Netlify
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Build the project: `npm run build`
+2. Upload the `dist` folder to Netlify
+3. Set build command: `npm run build`
+4. Set publish directory: `dist`
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-feature`
+3. Commit changes: `git commit -am 'Add new feature'`
+4. Push to branch: `git push origin feature/new-feature`
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**TRIDYY**
+- GitHub: [@TRIDYY](https://github.com/TRIDYY)
+
+## 🙏 Acknowledgments
+
+- Built with [Vite](https://vitejs.dev/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Authentication by [Clerk](https://clerk.com/)
+- Icons by [Lucide](https://lucide.dev/)
