@@ -25,3 +25,7 @@ alert-tamer-ai/
 *.njsproj
 *.sln
 *.sw?
+# Additional ignores for development
+*.log
+*.tmp
+.vscode/settings.json
