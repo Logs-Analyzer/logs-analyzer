@@ -132,6 +132,21 @@ This project is licensed under the MIT License.
 **TRIDYY**
 - GitHub: [@TRIDYY](https://github.com/TRIDYY)
 
+**ishakshamsaini**
+- GitHub: [@ishakshamsaini](https://github.com/ishakshamsaini)
+
+**Ssm158**
+- GitHub: [@Ssm158](https://github.com/Ssm158)
+
+**JinRe-uX**
+- GitHub: [@JinRe-uX](https://github.com/JinRe-uX)
+
+**Pranav071-a**
+- GitHub: [@Pranav071-a](https://github.com/Pranav071-a)
+
+**aTwatwithaThinkPad**
+- GitHub: [@aTwatwithaThinkPad](https://github.com/aTwatwithaThinkPad)
+
 ## 🙏 Acknowledgments
 
 - Built with [Vite](https://vitejs.dev/)
