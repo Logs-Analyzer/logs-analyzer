@@ -1,10 +1,10 @@
-# Alert Tamer AI
+# AI Powered Security Logger
 
 > AI-powered log analysis and threat detection system
 
 ## 🚀 Overview
 
-Alert Tamer AI is a sophisticated React-based application designed for intelligent log analysis and cybersecurity threat detection. Built with modern web technologies, it provides a comprehensive dashboard for monitoring, analyzing, and responding to security incidents.
+AI Powered Security Logger is a sophisticated React-based application designed for intelligent log analysis and cybersecurity threat detection. Built with modern web technologies, it provides a comprehensive dashboard for monitoring, analyzing, and responding to security incidents.
 
 ## ✨ Features
 
