@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # AI Powered Security Logger
+=======
+# LOGS ANALYZER
+>>>>>>> 18a9f4fc8a08739db898d75cd27ca196d5d33b75
 
 > AI-powered log analysis and threat detection system
 
