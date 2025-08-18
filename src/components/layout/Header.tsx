@@ -11,6 +11,7 @@ const Header = () => {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Threat Analysis', href: '/threat-analysis' },
+    { name: 'Log Analysis', href: '/log-analysis' },
     { name: 'Incident Response', href: '/incident-response' },
     { name: 'Reports', href: '/reports' },
     { name: 'Settings', href: '/settings' }

@@ -7,6 +7,7 @@ import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ThreatAnalysis from "./pages/ThreatAnalysis";
+import LogAnalysis from "./pages/LogAnalysis";
 import IncidentResponse from "./pages/IncidentResponse";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/threat-analysis" element={<ThreatAnalysis />} />
+            <Route path="/log-analysis" element={<LogAnalysis />} />
             <Route path="/incident-response" element={<IncidentResponse />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
