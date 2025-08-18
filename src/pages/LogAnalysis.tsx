@@ -24,8 +24,10 @@ interface Threat {
 interface AnalysisResult {
   fileName: string
   fileSize: number
+  fileType?: string
   threatsFound: number
   threats: Threat[]
+  error?: string
 }
 
 const LogAnalysis = () => {
@@ -38,7 +40,7 @@ const LogAnalysis = () => {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || [])
     const validFiles = files.filter(file => {
-      const validExtensions = ['.log', '.txt', '.csv']
+      const validExtensions = ['.log', '.txt', '.csv', '.json', '.xml', '.pdf', '.docx', '.doc', '.rtf', '.md']
       const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'))
       return validExtensions.includes(fileExtension)
     })
@@ -46,7 +48,7 @@ const LogAnalysis = () => {
     if (validFiles.length !== files.length) {
       toast({
         title: "Invalid Files",
-        description: "Only .log, .txt, and .csv files are allowed",
+        description: "Supported files: .log, .txt, .csv, .json, .xml, .pdf, .docx, .doc, .rtf, .md",
         variant: "destructive"
       })
     }
@@ -120,7 +122,8 @@ const LogAnalysis = () => {
     }
   }
 
-  const getSeverityColor = (severity: string) => {
+  const getSeverityColor = (severity: string, confidence: number) => {
+    if (confidence === 0) return 'text-gray-500'
     switch (severity) {
       case 'Critical': return 'text-red-500'
       case 'High': return 'text-orange-500'
@@ -130,7 +133,8 @@ const LogAnalysis = () => {
     }
   }
 
-  const getSeverityBadge = (severity: string) => {
+  const getSeverityBadge = (severity: string, confidence: number) => {
+    if (confidence === 0) return 'secondary'
     switch (severity) {
       case 'Critical': return 'destructive'
       case 'High': return 'default'
@@ -161,9 +165,9 @@ const LogAnalysis = () => {
             {/* File Upload Section */}
             <Card className="mb-8">
               <CardHeader>
-                <CardTitle>Upload Log Files</CardTitle>
+                <CardTitle>Upload Files for Analysis</CardTitle>
                 <CardDescription>
-                  Select .log, .txt, or .csv files to analyze for security threats
+                  Select files to analyze for security threats. Supports: .log, .txt, .csv, .json, .xml, .pdf, .docx, .doc, .rtf, .md
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -177,7 +181,7 @@ const LogAnalysis = () => {
                       <input
                         type="file"
                         multiple
-                        accept=".log,.txt,.csv"
+                        accept=".log,.txt,.csv,.json,.xml,.pdf,.docx,.doc,.rtf,.md"
                         onChange={handleFileSelect}
                         className="hidden"
                         id="file-upload"
@@ -259,31 +263,44 @@ const LogAnalysis = () => {
                         <div>
                           <CardTitle className="text-lg">{result.fileName}</CardTitle>
                           <CardDescription>
-                            File size: {(result.fileSize / 1024).toFixed(1)} KB
+                            File size: {(result.fileSize / 1024).toFixed(1)} KB • {result.threats.length} entries analyzed
+                            {result.fileType && ` • Type: ${result.fileType}`}
                           </CardDescription>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Badge variant={result.threatsFound > 0 ? "destructive" : "default"}>
-                            {result.threatsFound} threats found
-                          </Badge>
+                          {result.error ? (
+                            <Badge variant="destructive">
+                              Processing Error
+                            </Badge>
+                          ) : (
+                            <Badge variant={result.threatsFound > 0 ? "destructive" : "default"}>
+                              {result.threatsFound} threats found
+                            </Badge>
+                          )}
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      {result.threats.length > 0 ? (
+                      {result.error ? (
+                        <div className="text-center py-8">
+                          <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />
+                          <p className="text-muted-foreground mb-2">Failed to process file</p>
+                          <p className="text-sm text-red-600">{result.error}</p>
+                        </div>
+                      ) : result.threats.length > 0 ? (
                         <div className="space-y-4">
                           {result.threats.map((threat) => (
                             <div key={threat.id} className="border border-border rounded-lg p-4">
                               <div className="flex items-start justify-between mb-3">
                                 <div className="flex items-center space-x-3">
-                                  <AlertTriangle className={`h-5 w-5 ${getSeverityColor(threat.severity)}`} />
+                                  <AlertTriangle className={`h-5 w-5 ${getSeverityColor(threat.severity, threat.confidence)}`} />
                                   <div>
                                     <h4 className="font-semibold">{threat.id} - {threat.type}</h4>
                                     <p className="text-sm text-muted-foreground">{threat.timestamp}</p>
                                   </div>
                                 </div>
                                 <div className="flex space-x-2">
-                                  <Badge variant={getSeverityBadge(threat.severity)}>
+                                  <Badge variant={getSeverityBadge(threat.severity, threat.confidence)}>
                                     {threat.severity}
                                   </Badge>
                                   <Badge variant="outline">

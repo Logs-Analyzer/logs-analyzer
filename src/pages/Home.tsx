@@ -1,4 +1,4 @@
-import { ArrowRight, Shield, Zap, Eye, Bot, CheckCircle } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Eye, Bot, CheckCircle, Upload, FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Link } from 'react-router-dom'
@@ -79,6 +79,12 @@ const Home = () => {
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
+                  <Link to="/log-analysis">
+                    <Button size="lg" className="text-lg px-8 py-4 bg-green-600 hover:bg-green-700">
+                      <Upload className="mr-2 h-5 w-5" />
+                      Upload & Analyze Files
+                    </Button>
+                  </Link>
                 </SignedIn>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-gray-400 text-gray-300 hover:bg-gray-800 hover:text-white">
                   Watch Demo
@@ -92,6 +98,46 @@ const Home = () => {
           </div>
         </Vortex>
       </section>
+
+      {/* Quick Upload Section */}
+      <SignedIn>
+        <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900/20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                Quick File Analysis
+              </h2>
+              <p className="text-muted-foreground">
+                Upload your log files, documents, or any files for instant AI-powered threat analysis
+              </p>
+            </div>
+            
+            <Card className="border-2 border-dashed border-primary/30 bg-background/50 backdrop-blur-sm">
+              <CardContent className="p-8">
+                <div className="text-center">
+                  <div className="flex justify-center mb-6">
+                    <div className="p-4 bg-primary/10 rounded-full">
+                      <FileText className="h-12 w-12 text-primary" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4">
+                    Analyze Any File Type
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Supports .log, .txt, .csv, .pdf, .docx, .json, .xml and more
+                  </p>
+                  <Link to="/log-analysis">
+                    <Button size="lg" className="bg-primary hover:bg-primary/90">
+                      <Upload className="mr-2 h-5 w-5" />
+                      Start Analysis Now
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      </SignedIn>
 
       {/* Features Section */}
       <section className="py-20 bg-background">
