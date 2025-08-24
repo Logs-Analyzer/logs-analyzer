@@ -164,12 +164,12 @@ git push origin main
 
 | Branch | Team Member | Focus Area | Key Features |
 |--------|-------------|------------|--------------|
-| `dashboard` | TBD | Main Interface | Widgets, metrics, overview |
-| `settings` | TBD | Configuration | User prefs, system config |
-| `reports` | TBD | Analytics | Export, charts, statistics |
-| `threat-analysis` | TBD | Security | AI models, detection |
-| `log-analysis` | TBD | Processing | File parsing, formats |
-| `incident-response` | TBD | Response | Alerts, automation |
+| `dashboard` | Sal | Main Interface | Widgets, metrics, overview |
+| `settings` | Shaksham| Configuration | User prefs, system config |
+| `reports` | Zails | Analytics | Export, charts, statistics |
+| `threat-analysis` | Som | Security | AI models, detection |
+| `log-analysis` | Shreyas/Tridash | Processing | File parsing, formats |
+| `incident-response` | Shreyas/Tridash | Response | Alerts, automation |
 
 ## 🔒 **Best Practices**
 
