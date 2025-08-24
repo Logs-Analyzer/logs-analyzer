@@ -8,6 +8,7 @@ import { Switch } from '@/components/ui/switch'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
+import CyberBackground from '@/components/ui/cyber-background'
 
 const Settings = () => {
   return (
@@ -16,17 +17,18 @@ const Settings = () => {
         <RedirectToSignIn />
       </SignedOut>
       <SignedIn>
-        <div className="min-h-screen bg-background p-6">
-          <div className="max-w-4xl mx-auto">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Settings
-              </h1>
-              <p className="text-muted-foreground">
-                Configure your LOGS ANALYZER security preferences
-              </p>
-            </div>
+        <CyberBackground>
+          <div className="p-6">
+            <div className="max-w-4xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  Settings
+                </h1>
+                <p className="text-muted-foreground">
+                  Configure your LOGS ANALYZER security preferences
+                </p>
+              </div>
 
             <Tabs defaultValue="general" className="space-y-6">
               <TabsList className="grid w-full grid-cols-5">
@@ -432,8 +434,9 @@ const Settings = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+            </div>
           </div>
-        </div>
+        </CyberBackground>
       </SignedIn>
     </>
   )

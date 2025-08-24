@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import CyberBackground from '@/components/ui/cyber-background'
 
 const ThreatAnalysis = () => {
   const threats = [
@@ -79,17 +80,18 @@ const ThreatAnalysis = () => {
         <RedirectToSignIn />
       </SignedOut>
       <SignedIn>
-        <div className="min-h-screen bg-background p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Threat Analysis
-              </h1>
-              <p className="text-muted-foreground">
-                AI-powered threat detection and analysis dashboard
-              </p>
-            </div>
+        <CyberBackground>
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  Threat Analysis
+                </h1>
+                <p className="text-muted-foreground">
+                  AI-powered threat detection and analysis dashboard
+                </p>
+              </div>
 
             {/* Filters and Search */}
             <Card className="mb-6">
@@ -200,8 +202,9 @@ const ThreatAnalysis = () => {
                 </Card>
               ))}
             </div>
+            </div>
           </div>
-        </div>
+        </CyberBackground>
       </SignedIn>
     </>
   )

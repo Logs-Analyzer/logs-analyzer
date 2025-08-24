@@ -3,6 +3,7 @@ import { AlertTriangle, Shield, Activity, Users, TrendingUp, Clock } from 'lucid
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import CyberBackground from '@/components/ui/cyber-background'
 
 const Dashboard = () => {
   const stats = [
@@ -73,17 +74,18 @@ const Dashboard = () => {
         <RedirectToSignIn />
       </SignedOut>
       <SignedIn>
-        <div className="min-h-screen bg-background p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Security Dashboard
-              </h1>
-              <p className="text-muted-foreground">
-                Real-time overview of your cybersecurity posture
-              </p>
-            </div>
+        <CyberBackground>
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  Security Dashboard
+                </h1>
+                <p className="text-muted-foreground">
+                  Real-time overview of your cybersecurity posture
+                </p>
+              </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -176,8 +178,9 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </div>
+            </div>
           </div>
-        </div>
+        </CyberBackground>
       </SignedIn>
     </>
   )
