@@ -1,3 +1,0 @@
-This is a test file to verify Git configuration.
-Created on: August 24, 2025
-Purpose: Ensure commits are attributed to the correct GitHub account.
