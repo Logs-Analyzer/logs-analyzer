@@ -1,12 +1,14 @@
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
-import { Upload, FileText, AlertTriangle, CheckCircle, Clock, X } from 'lucide-react'
+import { Upload, FileText, AlertTriangle, CheckCircle, Clock, X, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { useToast } from '@/hooks/use-toast'
+import { useThreatAnalysis } from '../contexts/ThreatAnalysisContext'
 import CyberBackground from '@/components/ui/cyber-background'
 
 interface Threat {
@@ -32,11 +34,12 @@ interface AnalysisResult {
 }
 
 const LogAnalysis = () => {
+  const navigate = useNavigate()
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([])
   const [uploadProgress, setUploadProgress] = useState(0)
   const { toast } = useToast()
+  const { analysisResults, setAnalysisResults } = useThreatAnalysis()
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || [])
@@ -275,9 +278,22 @@ const LogAnalysis = () => {
                               Processing Error
                             </Badge>
                           ) : (
-                            <Badge variant={result.threatsFound > 0 ? "destructive" : "default"}>
-                              {result.threatsFound} threats found
-                            </Badge>
+                            <>
+                              <Badge variant={result.threatsFound > 0 ? "destructive" : "default"}>
+                                {result.threatsFound} threats found
+                              </Badge>
+                              {result.threatsFound > 0 && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => navigate('/threat-analysis')}
+                                  className="ml-2"
+                                >
+                                  <ArrowRight className="h-4 w-4 mr-1" />
+                                  View Details
+                                </Button>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
@@ -342,6 +358,33 @@ const LogAnalysis = () => {
                     </CardContent>
                   </Card>
                 ))}
+                
+                {/* Summary and Call-to-Action */}
+                {analysisResults.some(result => result.threatsFound > 0) && (
+                  <Card className="border-2 border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
+                    <CardContent className="pt-6">
+                      <div className="text-center space-y-4">
+                        <div className="flex items-center justify-center space-x-2">
+                          <AlertTriangle className="h-6 w-6 text-orange-500" />
+                          <h3 className="text-lg font-semibold">
+                            {analysisResults.reduce((total, result) => total + result.threatsFound, 0)} Total Threats Detected
+                          </h3>
+                        </div>
+                        <p className="text-muted-foreground">
+                          Get detailed analysis, threat categorization, and AI-powered remediation recommendations
+                        </p>
+                        <Button 
+                          onClick={() => navigate('/threat-analysis')}
+                          className="bg-orange-600 hover:bg-orange-700 text-white"
+                          size="lg"
+                        >
+                          <ArrowRight className="h-5 w-5 mr-2" />
+                          Analyze Threats in Detail
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             )}
             </div>
