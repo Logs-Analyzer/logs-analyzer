@@ -35,6 +35,15 @@ interface AnalysisResult {
 
 const LogAnalysis = () => {
   const navigate = useNavigate()
+  
+  // Function to navigate to threat analysis and scroll to top
+  const navigateToThreatAnalysis = () => {
+    navigate('/threat-analysis')
+    // Small delay to ensure page has loaded before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
+  }
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -132,7 +141,7 @@ const LogAnalysis = () => {
       case 'Critical': return 'text-red-500'
       case 'High': return 'text-orange-500'
       case 'Medium': return 'text-yellow-500'
-      case 'Low': return 'text-blue-500'
+      case 'Low': return 'text-green-500'
       default: return 'text-gray-500'
     }
   }
@@ -286,7 +295,7 @@ const LogAnalysis = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => navigate('/threat-analysis')}
+                                  onClick={navigateToThreatAnalysis}
                                   className="ml-2"
                                 >
                                   <ArrowRight className="h-4 w-4 mr-1" />
@@ -344,18 +353,31 @@ const LogAnalysis = () => {
                                     return acc
                                   }, {} as Record<string, number>)
                                   
-                                  return Object.entries(severityCounts).map(([severity, count]) => (
-                                    <div key={severity} className="text-center">
-                                      <div className="relative mb-2">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 to-transparent rounded-lg"></div>
-                                        <Badge variant={getSeverityBadge(severity, 80)} className="relative shadow-lg">
-                                          {severity}
-                                        </Badge>
+                                  // Define proper order and colors
+                                  const severityOrder = ['Low', 'High', 'Critical']
+                                  const severityColors = {
+                                    'Low': 'bg-green-500 text-white border-green-600',
+                                    'High': 'bg-orange-400 text-white border-orange-500', 
+                                    'Critical': 'bg-red-600 text-white border-red-700'
+                                  }
+                                  
+                                  return severityOrder.map((severity) => {
+                                    const count = severityCounts[severity] || 0
+                                    if (count === 0) return null
+                                    
+                                    return (
+                                      <div key={severity} className="text-center">
+                                        <div className="relative mb-2">
+                                          <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 to-transparent rounded-lg"></div>
+                                          <Badge className={`relative shadow-lg ${severityColors[severity as keyof typeof severityColors]}`}>
+                                            {severity}
+                                          </Badge>
+                                        </div>
+                                        <p className="text-xl font-bold text-orange-400">{count}</p>
+                                        <p className="text-xs text-muted-foreground">threats</p>
                                       </div>
-                                      <p className="text-xl font-bold text-orange-400">{count}</p>
-                                      <p className="text-xs text-muted-foreground">threats</p>
-                                    </div>
-                                  ))
+                                    )
+                                  }).filter(Boolean)
                                 })()}
                               </div>
                             </div>
@@ -397,7 +419,7 @@ const LogAnalysis = () => {
                             <div className="relative">
                               <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-30"></div>
                               <Button 
-                                onClick={() => navigate('/threat-analysis')}
+                                onClick={navigateToThreatAnalysis}
                                 className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-xl border border-orange-500/50 px-8 py-3"
                               >
                                 <Shield className="h-5 w-5 mr-2" />
@@ -477,7 +499,7 @@ const LogAnalysis = () => {
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-40 animate-pulse"></div>
                           <Button 
-                            onClick={() => navigate('/threat-analysis')}
+                            onClick={navigateToThreatAnalysis}
                             className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-2xl border border-orange-500/50 px-12 py-4 text-lg font-semibold"
                             size="lg"
                           >

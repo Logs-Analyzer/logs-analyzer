@@ -22,8 +22,11 @@ const ThreatAnalysis: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
 
-  // Initialize loading state
+  // Initialize loading state and scroll to top
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    
     // Give a small delay to ensure context has been initialized
     setTimeout(() => {
       setIsLoading(false)
