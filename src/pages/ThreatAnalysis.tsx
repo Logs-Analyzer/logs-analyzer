@@ -233,22 +233,21 @@ const ThreatAnalysis: React.FC = () => {
     
     // If no enhanced threats yet, estimate based on simple rules
     if (enhancedThreats.length === 0 && basicThreats.length > 0) {
-      // Simple estimation: assume 60-70% of low severity threats are home fixable
-      // and 30% of medium severity, 10% of high, 5% of critical
+      // Simple estimation based on severity with flexible matching
       const estimatedHomeFixable = basicThreats.reduce((count, threat) => {
-        const severity = threat.severity?.toLowerCase() || ''
+        const severity = threat.severity?.toLowerCase()?.trim() || ''
         
-        switch (severity) {
-          case 'low':
-            return count + 0.7 // 70% of low severity
-          case 'medium':
-            return count + 0.3 // 30% of medium severity  
-          case 'high':
-            return count + 0.1 // 10% of high severity
-          case 'critical':
-            return count + 0.05 // 5% of critical severity
-          default:
-            return count + 0.5 // 50% for unknown severity
+        // More flexible severity matching
+        if (severity.includes('low') || severity === 'l') {
+          return count + 0.7 // 70% of low severity
+        } else if (severity.includes('medium') || severity === 'm') {
+          return count + 0.3 // 30% of medium severity  
+        } else if (severity.includes('high') || severity === 'h') {
+          return count + 0.1 // 10% of high severity
+        } else if (severity.includes('critical') || severity === 'c') {
+          return count + 0.05 // 5% of critical severity
+        } else {
+          return count + 0.4 // 40% for unknown severity
         }
       }, 0)
       
