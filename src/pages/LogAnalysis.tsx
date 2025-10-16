@@ -160,10 +160,10 @@ const LogAnalysis = () => {
               {/* Header */}
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
-                  Log File Analysis
+                  Upload Files for Analysis
                 </h1>
                 <p className="text-muted-foreground">
-                  Upload your log files for AI-powered threat detection and analysis
+                  Upload your log files for initial threat detection. Detailed analysis and remediation available on Threat Analysis page.
                 </p>
               </div>
 
@@ -306,48 +306,64 @@ const LogAnalysis = () => {
                           <p className="text-sm text-red-600">{result.error}</p>
                         </div>
                       ) : result.threats.length > 0 ? (
-                        <div className="space-y-4">
-                          {result.threats.map((threat) => (
-                            <div key={threat.id} className="border border-border rounded-lg p-4">
-                              <div className="flex items-start justify-between mb-3">
-                                <div className="flex items-center space-x-3">
-                                  <AlertTriangle className={`h-5 w-5 ${getSeverityColor(threat.severity, threat.confidence)}`} />
-                                  <div>
-                                    <h4 className="font-semibold">{threat.id} - {threat.type}</h4>
-                                    <p className="text-sm text-muted-foreground">{threat.timestamp}</p>
+                        <div className="space-y-3">
+                          <div className="text-center py-6">
+                            <AlertTriangle className="mx-auto h-16 w-16 text-orange-500 mb-4" />
+                            <h3 className="text-xl font-semibold mb-2">Security Threats Detected</h3>
+                            <p className="text-muted-foreground mb-4">
+                              Found {result.threatsFound} potential security issues in this file
+                            </p>
+                            
+                            {/* Severity Breakdown */}
+                            <div className="flex justify-center space-x-4 mb-6">
+                              {(() => {
+                                const severityCounts = result.threats.reduce((acc, threat) => {
+                                  acc[threat.severity] = (acc[threat.severity] || 0) + 1
+                                  return acc
+                                }, {} as Record<string, number>)
+                                
+                                return Object.entries(severityCounts).map(([severity, count]) => (
+                                  <div key={severity} className="text-center">
+                                    <Badge variant={getSeverityBadge(severity, 80)} className="mb-1">
+                                      {severity}
+                                    </Badge>
+                                    <p className="text-sm text-muted-foreground">{count}</p>
                                   </div>
-                                </div>
-                                <div className="flex space-x-2">
-                                  <Badge variant={getSeverityBadge(threat.severity, threat.confidence)}>
-                                    {threat.severity}
-                                  </Badge>
-                                  <Badge variant="outline">
-                                    {threat.confidence}% confidence
-                                  </Badge>
-                                </div>
-                              </div>
-                              
-                              <p className="text-sm mb-3">{threat.description}</p>
-                              
-                              <div className="grid grid-cols-2 gap-4 text-sm">
-                                <div>
-                                  <span className="font-medium">Source: </span>
-                                  <span className="text-muted-foreground">{threat.source}</span>
-                                </div>
-                                <div>
-                                  <span className="font-medium">Target: </span>
-                                  <span className="text-muted-foreground">{threat.target}</span>
-                                </div>
-                              </div>
-                              
-                              {threat.recommendedAction && (
-                                <div className="mt-3 p-3 bg-muted rounded-lg">
-                                  <span className="text-sm font-medium">Recommended Action: </span>
-                                  <span className="text-sm">{threat.recommendedAction}</span>
-                                </div>
-                              )}
+                                ))
+                              })()}
                             </div>
-                          ))}
+                            
+                            {/* Top Threats Preview */}
+                            <div className="bg-muted rounded-lg p-4 mb-4">
+                              <h4 className="font-semibold mb-2">Top Threats:</h4>
+                              <div className="space-y-2">
+                                {result.threats.slice(0, 3).map((threat) => (
+                                  <div key={threat.id} className="flex items-center justify-between text-sm">
+                                    <span className="font-medium">{threat.id}</span>
+                                    <span className="text-muted-foreground">{threat.type}</span>
+                                    <Badge variant={getSeverityBadge(threat.severity, threat.confidence)} className="text-xs">
+                                      {threat.severity}
+                                    </Badge>
+                                  </div>
+                                ))}
+                                {result.threats.length > 3 && (
+                                  <div className="text-center pt-2">
+                                    <span className="text-sm text-muted-foreground">
+                                      +{result.threats.length - 3} more threats
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            
+                            <Button 
+                              onClick={() => navigate('/threat-analysis')}
+                              className="bg-orange-600 hover:bg-orange-700 text-white"
+                            >
+                              <ArrowRight className="h-4 w-4 mr-2" />
+                              Analyze All Threats
+                            </Button>
+                          </div>
                         </div>
                       ) : (
                         <div className="text-center py-8">
