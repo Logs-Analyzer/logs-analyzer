@@ -220,7 +220,61 @@ const ThreatAnalysis: React.FC = () => {
 
   // Calculate stats
   const criticalHighThreats = allThreats.filter(t => t.severity === 'Critical' || t.severity === 'High').length
-  const homeFixableThreats = enhancedThreats.filter(t => t.detailedAnalysis?.isHomeFixable).length
+  
+  // Calculate home fixable threats with fallback logic for non-enhanced threats
+  const homeFixableThreats = (() => {
+    // Count enhanced threats that are marked as home fixable
+    const enhancedHomeFixable = enhancedThreats.filter(t => t.detailedAnalysis?.isHomeFixable).length
+    
+    // For non-enhanced threats, estimate based on severity and type
+    const basicThreats = allThreats.filter(threat => 
+      !enhancedThreats.some(enhanced => enhanced.id === threat.id)
+    )
+    
+    const estimatedHomeFixable = basicThreats.filter(threat => {
+      const threatType = threat.type?.toLowerCase() || ''
+      const threatDesc = threat.description?.toLowerCase() || ''
+      const severity = threat.severity?.toLowerCase() || ''
+      
+      // Consider these types likely to be home fixable
+      const homeFixableKeywords = [
+        'information', 'warning', 'configuration', 'log', 'disk space', 
+        'memory', 'performance', 'space', 'cleanup', 'maintenance',
+        'system warning', 'file', 'directory', 'permission'
+      ]
+      
+      // High-risk keywords that are typically NOT home fixable
+      const expertRequiredKeywords = [
+        'unauthorized', 'breach', 'attack', 'malware', 'virus',
+        'intrusion', 'hack', 'exploit', 'injection', 'ddos'
+      ]
+      
+      // Check if it requires expert attention
+      const requiresExpert = expertRequiredKeywords.some(keyword => 
+        threatType.includes(keyword) || threatDesc.includes(keyword)
+      )
+      
+      if (requiresExpert) return false
+      
+      // Low severity is often home fixable
+      if (severity === 'low') {
+        return homeFixableKeywords.some(keyword => 
+          threatType.includes(keyword) || threatDesc.includes(keyword)
+        ) || true // Default low severity to home fixable
+      }
+      
+      // Medium severity with specific types
+      if (severity === 'medium') {
+        return homeFixableKeywords.slice(0, 8).some(keyword => 
+          threatType.includes(keyword) || threatDesc.includes(keyword)
+        )
+      }
+      
+      return false
+    }).length
+    
+    return enhancedHomeFixable + estimatedHomeFixable
+  })()
 
   // Functions to handle stat card clicks
   const handleSeverityClick = (severity: string) => {
