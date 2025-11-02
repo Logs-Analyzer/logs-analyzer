@@ -22,8 +22,11 @@ const ThreatAnalysis: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
 
-  // Initialize loading state
+  // Initialize loading state and scroll to top
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    
     // Give a small delay to ensure context has been initialized
     setTimeout(() => {
       setIsLoading(false)
@@ -217,7 +220,42 @@ const ThreatAnalysis: React.FC = () => {
 
   // Calculate stats
   const criticalHighThreats = allThreats.filter(t => t.severity === 'Critical' || t.severity === 'High').length
-  const homeFixableThreats = enhancedThreats.filter(t => t.detailedAnalysis?.isHomeFixable).length
+  
+  // Calculate home fixable threats with fallback logic for non-enhanced threats
+  const homeFixableThreats = (() => {
+    // Count enhanced threats that are marked as home fixable
+    const enhancedHomeFixable = enhancedThreats.filter(t => t.detailedAnalysis?.isHomeFixable).length
+    
+    // For non-enhanced threats, estimate based on severity and type
+    const basicThreats = allThreats.filter(threat => 
+      !enhancedThreats.some(enhanced => enhanced.id === threat.id)
+    )
+    
+    // If no enhanced threats yet, estimate based on simple rules
+    if (enhancedThreats.length === 0 && basicThreats.length > 0) {
+      // Simple estimation based on severity with flexible matching
+      const estimatedHomeFixable = basicThreats.reduce((count, threat) => {
+        const severity = threat.severity?.toLowerCase()?.trim() || ''
+        
+        // More flexible severity matching
+        if (severity.includes('low') || severity === 'l') {
+          return count + 0.7 // 70% of low severity
+        } else if (severity.includes('medium') || severity === 'm') {
+          return count + 0.3 // 30% of medium severity  
+        } else if (severity.includes('high') || severity === 'h') {
+          return count + 0.1 // 10% of high severity
+        } else if (severity.includes('critical') || severity === 'c') {
+          return count + 0.05 // 5% of critical severity
+        } else {
+          return count + 0.4 // 40% for unknown severity
+        }
+      }, 0)
+      
+      return Math.round(estimatedHomeFixable)
+    }
+    
+    return enhancedHomeFixable
+  })()
 
   // Functions to handle stat card clicks
   const handleSeverityClick = (severity: string) => {

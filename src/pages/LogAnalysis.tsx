@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
-import { Upload, FileText, AlertTriangle, CheckCircle, Clock, X, ArrowRight } from 'lucide-react'
+import { Upload, FileText, AlertTriangle, CheckCircle, Clock, X, ArrowRight, Shield } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -35,6 +35,15 @@ interface AnalysisResult {
 
 const LogAnalysis = () => {
   const navigate = useNavigate()
+  
+  // Function to navigate to threat analysis and scroll to top
+  const navigateToThreatAnalysis = () => {
+    navigate('/threat-analysis')
+    // Small delay to ensure page has loaded before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
+  }
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -132,7 +141,7 @@ const LogAnalysis = () => {
       case 'Critical': return 'text-red-500'
       case 'High': return 'text-orange-500'
       case 'Medium': return 'text-yellow-500'
-      case 'Low': return 'text-blue-500'
+      case 'Low': return 'text-green-500'
       default: return 'text-gray-500'
     }
   }
@@ -160,10 +169,10 @@ const LogAnalysis = () => {
               {/* Header */}
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
-                  Log File Analysis
+                  Upload Files for Analysis
                 </h1>
                 <p className="text-muted-foreground">
-                  Upload your log files for AI-powered threat detection and analysis
+                  Upload your log files for initial threat detection. Detailed analysis and remediation available on Threat Analysis page.
                 </p>
               </div>
 
@@ -286,7 +295,7 @@ const LogAnalysis = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => navigate('/threat-analysis')}
+                                  onClick={navigateToThreatAnalysis}
                                   className="ml-2"
                                 >
                                   <ArrowRight className="h-4 w-4 mr-1" />
@@ -306,81 +315,199 @@ const LogAnalysis = () => {
                           <p className="text-sm text-red-600">{result.error}</p>
                         </div>
                       ) : result.threats.length > 0 ? (
-                        <div className="space-y-4">
-                          {result.threats.map((threat) => (
-                            <div key={threat.id} className="border border-border rounded-lg p-4">
-                              <div className="flex items-start justify-between mb-3">
-                                <div className="flex items-center space-x-3">
-                                  <AlertTriangle className={`h-5 w-5 ${getSeverityColor(threat.severity, threat.confidence)}`} />
-                                  <div>
-                                    <h4 className="font-semibold">{threat.id} - {threat.type}</h4>
-                                    <p className="text-sm text-muted-foreground">{threat.timestamp}</p>
-                                  </div>
-                                </div>
-                                <div className="flex space-x-2">
-                                  <Badge variant={getSeverityBadge(threat.severity, threat.confidence)}>
-                                    {threat.severity}
-                                  </Badge>
-                                  <Badge variant="outline">
-                                    {threat.confidence}% confidence
-                                  </Badge>
-                                </div>
+                        <div className="relative overflow-hidden">
+                          {/* Cybersecurity Background Pattern */}
+                          <div className="absolute inset-0 opacity-5">
+                            <div className="absolute top-4 left-4 w-8 h-8 border border-current rounded rotate-45"></div>
+                            <div className="absolute top-12 right-8 w-6 h-6 border border-current rounded-full"></div>
+                            <div className="absolute bottom-8 left-12 w-4 h-4 bg-current rounded-full"></div>
+                            <div className="absolute bottom-16 right-4 w-12 h-1 bg-current rounded"></div>
+                            <div className="absolute top-1/3 left-1/4 w-1 h-8 bg-current rounded"></div>
+                            <div className="absolute top-1/2 right-1/3 w-8 h-1 bg-current rounded"></div>
+                            <div className="absolute bottom-1/3 left-2/3 w-2 h-2 border border-current rotate-45"></div>
+                          </div>
+                          
+                          <div className="relative z-10 text-center py-8">
+                            {/* Animated Alert Icon */}
+                            <div className="relative mb-6">
+                              <div className="absolute inset-0 animate-pulse">
+                                <div className="mx-auto h-20 w-20 rounded-full bg-orange-500/20"></div>
                               </div>
-                              
-                              <p className="text-sm mb-3">{threat.description}</p>
-                              
-                              <div className="grid grid-cols-2 gap-4 text-sm">
-                                <div>
-                                  <span className="font-medium">Source: </span>
-                                  <span className="text-muted-foreground">{threat.source}</span>
-                                </div>
-                                <div>
-                                  <span className="font-medium">Target: </span>
-                                  <span className="text-muted-foreground">{threat.target}</span>
-                                </div>
-                              </div>
-                              
-                              {threat.recommendedAction && (
-                                <div className="mt-3 p-3 bg-muted rounded-lg">
-                                  <span className="text-sm font-medium">Recommended Action: </span>
-                                  <span className="text-sm">{threat.recommendedAction}</span>
-                                </div>
-                              )}
+                              <AlertTriangle className="relative mx-auto h-16 w-16 text-orange-500 animate-bounce" />
                             </div>
-                          ))}
+                            
+                            <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                              Security Threats Detected
+                            </h3>
+                            <p className="text-muted-foreground mb-6">
+                              Found <span className="font-bold text-orange-500">{result.threatsFound}</span> potential security issues in this file
+                            </p>
+                            
+                            {/* Enhanced Severity Breakdown */}
+                            <div className="bg-gradient-to-r from-slate-900/50 to-slate-800/50 rounded-xl p-6 mb-6 border border-orange-500/20">
+                              <h4 className="text-sm font-semibold text-orange-400 mb-4 uppercase tracking-wider">Threat Distribution</h4>
+                              <div className="flex justify-center space-x-6">
+                                {(() => {
+                                  const severityCounts = result.threats.reduce((acc, threat) => {
+                                    acc[threat.severity] = (acc[threat.severity] || 0) + 1
+                                    return acc
+                                  }, {} as Record<string, number>)
+                                  
+                                  // Define proper order and colors
+                                  const severityOrder = ['Low', 'High', 'Critical']
+                                  const severityColors = {
+                                    'Low': 'bg-green-500 text-white border-green-600',
+                                    'High': 'bg-orange-400 text-white border-orange-500', 
+                                    'Critical': 'bg-red-600 text-white border-red-700'
+                                  }
+                                  
+                                  return severityOrder.map((severity) => {
+                                    const count = severityCounts[severity] || 0
+                                    if (count === 0) return null
+                                    
+                                    return (
+                                      <div key={severity} className="text-center">
+                                        <div className="relative mb-2">
+                                          <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 to-transparent rounded-lg"></div>
+                                          <Badge className={`relative shadow-lg ${severityColors[severity as keyof typeof severityColors]}`}>
+                                            {severity}
+                                          </Badge>
+                                        </div>
+                                        <p className="text-xl font-bold text-orange-400">{count}</p>
+                                        <p className="text-xs text-muted-foreground">threats</p>
+                                      </div>
+                                    )
+                                  }).filter(Boolean)
+                                })()}
+                              </div>
+                            </div>
+                            
+                            {/* Enhanced Top Threats Preview */}
+                            <div className="bg-gradient-to-br from-slate-900/70 to-slate-800/70 rounded-xl p-6 mb-6 border border-orange-500/30 backdrop-blur-sm">
+                              <div className="flex items-center justify-center mb-4">
+                                <Shield className="h-5 w-5 text-orange-400 mr-2" />
+                                <h4 className="font-semibold text-orange-400 uppercase tracking-wider text-sm">Critical Alerts</h4>
+                              </div>
+                              <div className="space-y-3">
+                                {result.threats.slice(0, 3).map((threat, index) => (
+                                  <div key={threat.id} className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg border border-orange-500/10 hover:border-orange-500/30 transition-colors">
+                                    <div className="flex items-center space-x-3">
+                                      <div className="flex items-center justify-center w-8 h-8 bg-orange-500/20 rounded-full text-xs font-bold text-orange-400">
+                                        {index + 1}
+                                      </div>
+                                      <div className="text-left">
+                                        <p className="font-medium text-sm">{threat.id}</p>
+                                        <p className="text-xs text-muted-foreground">{threat.type}</p>
+                                      </div>
+                                    </div>
+                                    <Badge variant={getSeverityBadge(threat.severity, threat.confidence)} className="text-xs shadow-sm">
+                                      {threat.severity}
+                                    </Badge>
+                                  </div>
+                                ))}
+                                {result.threats.length > 3 && (
+                                  <div className="text-center pt-2 border-t border-orange-500/20">
+                                    <span className="text-sm text-orange-400 font-medium">
+                                      +{result.threats.length - 3} more threats detected
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            
+                            {/* Enhanced CTA Button */}
+                            <div className="relative">
+                              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-30"></div>
+                              <Button 
+                                onClick={navigateToThreatAnalysis}
+                                className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-xl border border-orange-500/50 px-8 py-3"
+                              >
+                                <Shield className="h-5 w-5 mr-2" />
+                                Analyze All Threats
+                                <ArrowRight className="h-4 w-4 ml-2" />
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       ) : (
-                        <div className="text-center py-8">
-                          <CheckCircle className="mx-auto h-12 w-12 text-green-500 mb-4" />
-                          <p className="text-muted-foreground">No threats detected in this file</p>
+                        <div className="relative text-center py-12 overflow-hidden">
+                          {/* Success Background Pattern */}
+                          <div className="absolute inset-0 opacity-5">
+                            <div className="absolute top-4 left-6 w-6 h-6 border border-green-500 rounded-full animate-pulse"></div>
+                            <div className="absolute top-8 right-4 w-4 h-4 bg-green-500 rounded rotate-45"></div>
+                            <div className="absolute bottom-6 left-4 w-8 h-1 bg-green-500 rounded"></div>
+                            <div className="absolute bottom-4 right-8 w-2 h-6 bg-green-500 rounded"></div>
+                            <div className="absolute top-1/2 left-1/3 w-3 h-3 border border-green-500 rotate-12"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="relative mb-4">
+                              <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl animate-pulse"></div>
+                              <CheckCircle className="relative mx-auto h-16 w-16 text-green-500" />
+                            </div>
+                            <h4 className="text-lg font-semibold text-green-600 mb-2">All Clear!</h4>
+                            <p className="text-muted-foreground">No security threats detected in this file</p>
+                            <div className="mt-4 inline-block px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-lg">
+                              <span className="text-sm text-green-600 font-medium">✓ File is secure</span>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </CardContent>
                   </Card>
                 ))}
                 
-                {/* Summary and Call-to-Action */}
+                {/* Enhanced Summary and Call-to-Action */}
                 {analysisResults.some(result => result.threatsFound > 0) && (
-                  <Card className="border-2 border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
-                    <CardContent className="pt-6">
-                      <div className="text-center space-y-4">
-                        <div className="flex items-center justify-center space-x-2">
-                          <AlertTriangle className="h-6 w-6 text-orange-500" />
-                          <h3 className="text-lg font-semibold">
-                            {analysisResults.reduce((total, result) => total + result.threatsFound, 0)} Total Threats Detected
-                          </h3>
+                  <Card className="relative overflow-hidden border-2 border-orange-500/30 bg-gradient-to-br from-orange-950/20 via-red-950/20 to-orange-950/20 backdrop-blur-sm">
+                    {/* Cybersecurity Background Elements */}
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-16 h-16 border-2 border-orange-500 rounded-full animate-pulse"></div>
+                      <div className="absolute top-8 right-8 w-8 h-8 border border-orange-400 rotate-45"></div>
+                      <div className="absolute bottom-4 left-1/3 w-12 h-2 bg-orange-500 rounded animate-pulse"></div>
+                      <div className="absolute bottom-8 right-12 w-4 h-12 bg-gradient-to-t from-orange-500/50 to-transparent"></div>
+                      <div className="absolute top-1/2 left-8 w-2 h-8 bg-orange-400 rounded animate-pulse"></div>
+                      <div className="absolute top-1/3 right-1/4 w-6 h-6 border-2 border-orange-400 rounded rotate-12 animate-spin"></div>
+                    </div>
+                    
+                    <CardContent className="relative z-10 pt-8 pb-8">
+                      <div className="text-center space-y-6">
+                        {/* Animated Alert Header */}
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-orange-500/20 rounded-full blur-xl animate-pulse"></div>
+                          <div className="relative flex items-center justify-center space-x-3">
+                            <div className="relative">
+                              <Shield className="h-8 w-8 text-orange-500 animate-pulse" />
+                              <div className="absolute inset-0 h-8 w-8 border-2 border-orange-500 rounded-full animate-ping"></div>
+                            </div>
+                            <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                              {analysisResults.reduce((total, result) => total + result.threatsFound, 0)} Total Threats Detected
+                            </h3>
+                          </div>
                         </div>
-                        <p className="text-muted-foreground">
-                          Get detailed analysis, threat categorization, and AI-powered remediation recommendations
-                        </p>
-                        <Button 
-                          onClick={() => navigate('/threat-analysis')}
-                          className="bg-orange-600 hover:bg-orange-700 text-white"
-                          size="lg"
-                        >
-                          <ArrowRight className="h-5 w-5 mr-2" />
-                          Analyze Threats in Detail
-                        </Button>
+                        
+                        {/* Enhanced Description */}
+                        <div className="bg-slate-900/50 rounded-lg p-4 border border-orange-500/20">
+                          <p className="text-muted-foreground">
+                            <span className="text-orange-400 font-semibold">⚡ Advanced Security Analysis Ready</span>
+                            <br />
+                            Get detailed threat categorization, AI-powered remediation recommendations, and expert-level security insights
+                          </p>
+                        </div>
+                        
+                        {/* Enhanced CTA Button */}
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-40 animate-pulse"></div>
+                          <Button 
+                            onClick={navigateToThreatAnalysis}
+                            className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-2xl border border-orange-500/50 px-12 py-4 text-lg font-semibold"
+                            size="lg"
+                          >
+                            <Shield className="h-6 w-6 mr-3 animate-pulse" />
+                            Launch Security Analysis
+                            <ArrowRight className="h-5 w-5 ml-3" />
+                          </Button>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

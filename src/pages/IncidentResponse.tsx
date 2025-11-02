@@ -1,107 +1,8 @@
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
-import { Play, Pause, RefreshCw, AlertCircle, CheckCircle, Clock, User } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Settings, Wrench, Shield, AlertTriangle } from 'lucide-react'
 import CyberBackground from '@/components/ui/cyber-background'
 
 const IncidentResponse = () => {
-  const activeIncidents = [
-    {
-      id: 'INC-001',
-      title: 'Critical Malware Detection',
-      severity: 'Critical',
-      status: 'In Progress',
-      assignee: 'Security Team Alpha',
-      progress: 65,
-      startTime: '2024-01-15 14:20:00',
-      estimatedCompletion: '2024-01-15 16:30:00',
-      steps: [
-        { name: 'Threat Identification', status: 'completed' },
-        { name: 'System Isolation', status: 'completed' },
-        { name: 'Malware Analysis', status: 'in-progress' },
-        { name: 'System Cleanup', status: 'pending' },
-        { name: 'Security Validation', status: 'pending' }
-      ]
-    },
-    {
-      id: 'INC-002',
-      title: 'Phishing Campaign Response',
-      severity: 'High',
-      status: 'In Progress',
-      assignee: 'Security Team Beta',
-      progress: 40,
-      startTime: '2024-01-15 13:15:00',
-      estimatedCompletion: '2024-01-15 17:00:00',
-      steps: [
-        { name: 'Email Analysis', status: 'completed' },
-        { name: 'User Notification', status: 'completed' },
-        { name: 'Domain Blocking', status: 'in-progress' },
-        { name: 'User Training', status: 'pending' },
-        { name: 'Monitoring Enhancement', status: 'pending' }
-      ]
-    }
-  ]
-
-  const completedIncidents = [
-    {
-      id: 'INC-003',
-      title: 'DDoS Attack Mitigation',
-      severity: 'Medium',
-      status: 'Resolved',
-      duration: '45 minutes',
-      completedAt: '2024-01-15 12:30:00'
-    },
-    {
-      id: 'INC-004',
-      title: 'Unauthorized Access Attempt',
-      severity: 'High',
-      status: 'Resolved',
-      duration: '2 hours 15 minutes',
-      completedAt: '2024-01-15 10:45:00'
-    }
-  ]
-
-  const playbooks = [
-    {
-      name: 'Malware Response',
-      description: 'Automated response for malware detection and removal',
-      triggers: 12,
-      avgTime: '2.5 hours'
-    },
-    {
-      name: 'Data Breach Protocol',
-      description: 'Comprehensive data breach response and notification',
-      triggers: 3,
-      avgTime: '6 hours'
-    },
-    {
-      name: 'Phishing Response',
-      description: 'Email security incident response and user protection',
-      triggers: 18,
-      avgTime: '1.5 hours'
-    }
-  ]
-
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'Critical': return 'text-cyber-danger'
-      case 'High': return 'text-cyber-warning'
-      case 'Medium': return 'text-cyber-secondary'
-      default: return 'text-muted-foreground'
-    }
-  }
-
-  const getStepIcon = (status: string) => {
-    switch (status) {
-      case 'completed': return <CheckCircle className="h-4 w-4 text-cyber-secondary" />
-      case 'in-progress': return <RefreshCw className="h-4 w-4 text-primary animate-spin" />
-      default: return <Clock className="h-4 w-4 text-muted-foreground" />
-    }
-  }
-
   return (
     <>
       <SignedOut>
@@ -109,167 +10,98 @@ const IncidentResponse = () => {
       </SignedOut>
       <SignedIn>
         <CyberBackground>
-          <div className="p-6">
-            <div className="max-w-7xl mx-auto">
-              {/* Header */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-foreground mb-2">
-                  Incident Response
-                </h1>
-                <p className="text-muted-foreground">
-                  Automated incident response and management center
-                </p>
+          <div className="min-h-screen flex items-center justify-center p-6">
+            <div className="max-w-2xl mx-auto text-center">
+              {/* Animated Background Elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-orange-500/20 rounded-full animate-pulse"></div>
+                <div className="absolute top-1/3 right-1/4 w-16 h-16 border border-blue-500/20 rotate-45 animate-bounce"></div>
+                <div className="absolute bottom-1/4 left-1/3 w-24 h-1 bg-gradient-to-r from-orange-500/30 to-transparent animate-pulse"></div>
+                <div className="absolute bottom-1/3 right-1/3 w-8 h-20 bg-gradient-to-t from-blue-500/20 to-transparent animate-pulse"></div>
+                <div className="absolute top-1/2 left-1/6 w-4 h-4 bg-orange-400/40 rounded-full animate-ping"></div>
+                <div className="absolute top-2/3 right-1/6 w-6 h-6 border-2 border-orange-400/30 rounded animate-spin"></div>
               </div>
 
-            <Tabs defaultValue="active" className="space-y-6">
-              <TabsList>
-                <TabsTrigger value="active">Active Incidents</TabsTrigger>
-                <TabsTrigger value="completed">Completed</TabsTrigger>
-                <TabsTrigger value="playbooks">Response Playbooks</TabsTrigger>
-              </TabsList>
+              {/* Main Content */}
+              <div className="relative z-10">
+                {/* Animated Icon Container */}
+                <div className="relative mb-8">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full blur-3xl animate-pulse"></div>
+                  <div className="relative flex items-center justify-center w-32 h-32 mx-auto bg-gradient-to-br from-slate-900/80 to-slate-800/80 rounded-full border-2 border-orange-500/50 backdrop-blur-sm">
+                    <div className="absolute inset-0 rounded-full border-2 border-orange-400/30 animate-ping"></div>
+                    <div className="relative">
+                      <Settings className="w-12 h-12 text-orange-500 animate-spin" style={{ animationDuration: '3s' }} />
+                      <Wrench className="absolute -bottom-2 -right-2 w-6 h-6 text-orange-400 animate-bounce" />
+                    </div>
+                  </div>
+                </div>
 
-              <TabsContent value="active" className="space-y-6">
-                {activeIncidents.map((incident) => (
-                  <Card key={incident.id}>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="flex items-center space-x-2">
-                            <AlertCircle className={`h-5 w-5 ${getSeverityColor(incident.severity)}`} />
-                            <span>{incident.title}</span>
-                          </CardTitle>
-                          <CardDescription className="mt-1">
-                            {incident.id} • Started {incident.startTime}
-                          </CardDescription>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Badge variant="default">{incident.status}</Badge>
-                          <Badge variant="outline" className={getSeverityColor(incident.severity)}>
-                            {incident.severity}
-                          </Badge>
-                        </div>
+                {/* Main Heading */}
+                <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-red-500 to-orange-600 bg-clip-text text-transparent animate-pulse">
+                  Under Maintenance
+                </h1>
+
+                {/* Subheading */}
+                <p className="text-xl md:text-2xl text-slate-300 mb-8 font-light">
+                  We're upgrading our{' '}
+                  <span className="text-orange-400 font-semibold">Incident Response</span>{' '}
+                  capabilities
+                </p>
+
+                {/* Description */}
+                <div className="bg-gradient-to-br from-slate-900/70 to-slate-800/70 rounded-2xl p-8 border border-orange-500/20 backdrop-blur-sm mb-8">
+                  <div className="flex items-center justify-center mb-4">
+                    <Shield className="w-8 h-8 text-orange-400 mr-3 animate-pulse" />
+                    <h2 className="text-2xl font-semibold text-orange-400">Security Enhancement in Progress</h2>
+                  </div>
+                  <p className="text-slate-300 text-lg leading-relaxed">
+                    Our team is implementing advanced automated incident response protocols
+                    and enhancing our security infrastructure to provide you with faster,
+                    more reliable threat mitigation capabilities.
+                  </p>
+                </div>
+
+                {/* Features Coming Soon */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  {[
+                    { icon: '🚀', title: 'AI-Powered Response', desc: 'Automated threat detection' },
+                    { icon: '⚡', title: 'Real-time Alerts', desc: 'Instant notifications' },
+                    { icon: '🛡️', title: 'Advanced Protection', desc: 'Enhanced security protocols' }
+                  ].map((feature, index) => (
+                    <div 
+                      key={index} 
+                      className="bg-slate-800/50 rounded-lg p-6 border border-orange-500/20 backdrop-blur-sm transform transition-all duration-300 hover:scale-105 hover:border-orange-500/40"
+                      style={{ animationDelay: `${index * 0.2}s` }}
+                    >
+                      <div className="text-3xl mb-3 animate-bounce" style={{ animationDelay: `${index * 0.1}s` }}>
+                        {feature.icon}
                       </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div>
-                            <span className="text-sm font-medium text-muted-foreground">Assignee:</span>
-                            <p className="text-sm text-foreground flex items-center">
-                              <User className="h-4 w-4 mr-1" />
-                              {incident.assignee}
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-sm font-medium text-muted-foreground">Progress:</span>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Progress value={incident.progress} className="flex-1" />
-                              <span className="text-sm text-foreground">{incident.progress}%</span>
-                            </div>
-                          </div>
-                          <div>
-                            <span className="text-sm font-medium text-muted-foreground">ETC:</span>
-                            <p className="text-sm text-foreground">{incident.estimatedCompletion}</p>
-                          </div>
-                        </div>
-
-                        <div>
-                          <h4 className="text-sm font-medium text-foreground mb-2">Response Steps:</h4>
-                          <div className="space-y-2">
-                            {incident.steps.map((step, index) => (
-                              <div key={index} className="flex items-center space-x-3 p-2 rounded border border-border">
-                                {getStepIcon(step.status)}
-                                <span className={`text-sm ${
-                                  step.status === 'completed' ? 'text-muted-foreground line-through' : 'text-foreground'
-                                }`}>
-                                  {step.name}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="flex justify-between">
-                          <div className="flex space-x-2">
-                            <Button variant="outline" size="sm">
-                              <Pause className="h-4 w-4 mr-2" />
-                              Pause
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              <RefreshCw className="h-4 w-4 mr-2" />
-                              Restart
-                            </Button>
-                          </div>
-                          <Button size="sm">
-                            View Details
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </TabsContent>
-
-              <TabsContent value="completed" className="space-y-4">
-                {completedIncidents.map((incident) => (
-                  <Card key={incident.id}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <CheckCircle className="h-6 w-6 text-cyber-secondary" />
-                          <div>
-                            <h3 className="text-lg font-semibold text-foreground">{incident.title}</h3>
-                            <p className="text-sm text-muted-foreground">
-                              {incident.id} • Completed {incident.completedAt}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          <div className="text-right">
-                            <p className="text-sm font-medium text-foreground">Duration</p>
-                            <p className="text-sm text-muted-foreground">{incident.duration}</p>
-                          </div>
-                          <Badge variant="outline" className={getSeverityColor(incident.severity)}>
-                            {incident.severity}
-                          </Badge>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </TabsContent>
-
-              <TabsContent value="playbooks" className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {playbooks.map((playbook, index) => (
-                    <Card key={index}>
-                      <CardHeader>
-                        <CardTitle className="flex items-center space-x-2">
-                          <Play className="h-5 w-5 text-primary" />
-                          <span>{playbook.name}</span>
-                        </CardTitle>
-                        <CardDescription>{playbook.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Triggers this month:</span>
-                            <span className="text-sm font-medium text-foreground">{playbook.triggers}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Avg response time:</span>
-                            <span className="text-sm font-medium text-foreground">{playbook.avgTime}</span>
-                          </div>
-                        </div>
-                        <Button className="w-full mt-4" variant="outline">
-                          Configure Playbook
-                        </Button>
-                      </CardContent>
-                    </Card>
+                      <h3 className="text-lg font-semibold text-orange-400 mb-2">{feature.title}</h3>
+                      <p className="text-slate-300 text-sm">{feature.desc}</p>
+                    </div>
                   ))}
                 </div>
-              </TabsContent>
-            </Tabs>
+
+                {/* Status Indicator */}
+                <div className="flex items-center justify-center space-x-3 text-orange-400">
+                  <div className="flex space-x-1">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  </div>
+                  <span className="text-lg font-medium">Upgrading Systems...</span>
+                </div>
+
+                {/* ETA */}
+                <div className="mt-8 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
+                  <div className="flex items-center justify-center space-x-2">
+                    <AlertTriangle className="w-5 h-5 text-orange-400" />
+                    <span className="text-orange-300 font-medium">
+                      Expected completion: Soon™
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </CyberBackground>
