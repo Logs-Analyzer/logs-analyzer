@@ -354,9 +354,10 @@ const LogAnalysis = () => {
                                   }, {} as Record<string, number>)
                                   
                                   // Define proper order and colors
-                                  const severityOrder = ['Low', 'High', 'Critical']
+                                  const severityOrder = ['Low', 'Medium', 'High', 'Critical']
                                   const severityColors = {
                                     'Low': 'bg-green-500 text-white border-green-600',
+                                    'Medium': 'bg-yellow-500 text-black border-yellow-600',
                                     'High': 'bg-orange-400 text-white border-orange-500', 
                                     'Critical': 'bg-red-600 text-white border-red-700'
                                   }
