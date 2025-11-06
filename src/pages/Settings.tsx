@@ -8,6 +8,10 @@ import { Switch } from '@/components/ui/switch'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
+import { } from '@/components/ui/separator'
+
+
+
 
 const Settings = () => {
   return (
@@ -440,3 +444,4 @@ const Settings = () => {
 }
 
 export default Settings
+
