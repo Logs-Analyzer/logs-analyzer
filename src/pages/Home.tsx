@@ -86,9 +86,6 @@ const Home = () => {
                     </Button>
                   </Link>
                 </SignedIn>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-gray-400 text-gray-300 hover:bg-gray-800 hover:text-white">
-                  Watch Demo
-                </Button>
               </div>
 
               <div className="mt-12 text-sm text-gray-400">
@@ -101,40 +98,115 @@ const Home = () => {
 
       {/* Quick Upload Section */}
       <SignedIn>
-        <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900/20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative py-16 bg-background overflow-hidden">
+          {/* Enhanced Matrix-style Background with Fading Effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Matrix Rain Effect */}
+            <div className="absolute inset-0 opacity-20">
+              {Array.from({ length: 15 }, (_, i) => (
+                <div
+                  key={i}
+                  className="absolute top-0 text-green-400 text-sm font-mono animate-matrix-fall"
+                  style={{
+                    left: `${(i * 6.67)}%`,
+                    animationDelay: `${i * 0.5}s`,
+                    animationDuration: '8s',
+                  }}
+                >
+                  {Array.from({ length: 20 }, (_, j) => (
+                    <div
+                      key={j}
+                      className="block h-6 leading-6"
+                      style={{
+                        opacity: Math.max(0, 1 - (j * 0.1)),
+                        color: j > 15 ? 'transparent' : 'inherit',
+                      }}
+                    >
+                      {Math.random() > 0.5 ? '1' : '0'}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Subtle Circuit Pattern */}
+            <div className="absolute inset-0 opacity-[0.02]">
+              <svg
+                className="absolute inset-0 h-full w-full text-cyan-400"
+                viewBox="0 0 1200 800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <pattern id="upload-circuit" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="30" x2="120" y2="30" stroke="currentColor" strokeWidth="0.5"/>
+                    <line x1="0" y1="90" x2="120" y2="90" stroke="currentColor" strokeWidth="0.5"/>
+                    <line x1="30" y1="0" x2="30" y2="120" stroke="currentColor" strokeWidth="0.5"/>
+                    <line x1="90" y1="0" x2="90" y2="120" stroke="currentColor" strokeWidth="0.5"/>
+                    <circle cx="30" cy="30" r="2" fill="currentColor"/>
+                    <circle cx="90" cy="30" r="2" fill="currentColor"/>
+                    <circle cx="30" cy="90" r="2" fill="currentColor"/>
+                    <circle cx="90" cy="90" r="2" fill="currentColor"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#upload-circuit)"/>
+              </svg>
+            </div>
+
+            {/* Floating Security Icons with Enhanced Effects */}
+            <div className="absolute inset-0 opacity-[0.06] pointer-events-none overflow-hidden">
+              <svg className="absolute top-10 left-10 h-6 w-6 text-blue-400 animate-float" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+              </svg>
+              <svg className="absolute top-32 right-20 h-8 w-8 text-cyan-300 animate-float-delay-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3M12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17A2,2 0 0,1 10,15A2,2 0 0,1 12,13Z" />
+              </svg>
+              <svg className="absolute bottom-16 left-1/3 h-7 w-7 text-green-400 animate-float-delay-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9" />
+              </svg>
+              <svg className="absolute bottom-32 right-1/4 h-6 w-6 text-purple-400 animate-float-delay-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 relative">
                 Quick File Analysis
+                <div className="absolute -inset-4 bg-gradient-to-r from-transparent via-background/80 to-transparent blur-sm -z-10"></div>
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground relative">
                 Upload your log files, documents, or any files for instant AI-powered threat analysis
+                <div className="absolute -inset-2 bg-gradient-to-r from-transparent via-background/60 to-transparent blur-sm -z-10"></div>
               </p>
             </div>
             
-            <Card className="border-2 border-dashed border-primary/30 bg-background/50 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <div className="flex justify-center mb-6">
-                    <div className="p-4 bg-primary/10 rounded-full">
-                      <FileText className="h-12 w-12 text-primary" />
-                    </div>
+            <div className="relative">
+              {/* Completely Borderless Card Content */}
+              <div className="p-8 text-center relative">
+                {/* Content Background Blur for Readability */}
+                <div className="absolute inset-0 bg-background/30 backdrop-blur-sm rounded-lg -z-10"></div>
+                
+                <div className="flex justify-center mb-6 relative">
+                  <div className="p-4 bg-primary/10 rounded-full backdrop-blur-sm">
+                    <FileText className="h-12 w-12 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">
-                    Analyze Any File Type
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Supports .log, .txt, .csv, .pdf, .docx, .json, .xml and more
-                  </p>
-                  <Link to="/log-analysis">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90">
-                      <Upload className="mr-2 h-5 w-5" />
-                      Start Analysis Now
-                    </Button>
-                  </Link>
                 </div>
-              </CardContent>
-            </Card>
+                <h3 className="text-xl font-semibold mb-4 text-foreground relative">
+                  Analyze Any File Type
+                </h3>
+                <p className="text-muted-foreground mb-6 relative">
+                  Supports .log, .txt, .csv, .pdf, .docx, .json, .xml and more
+                </p>
+                <Link to="/log-analysis" className="relative">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl transition-all duration-300 border-0 backdrop-blur-sm">
+                    <Upload className="mr-2 h-5 w-5" />
+                    Start Analysis Now
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       </SignedIn>
@@ -192,27 +264,36 @@ const Home = () => {
             </div>
 
             <div className="relative">
-              <div className="bg-gradient-cyber p-8 rounded-lg text-center">
-                <h3 className="text-2xl font-bold text-background mb-4">
-                  Start Your Free Trial
+              <div className="bg-gradient-cyber p-8 rounded-lg">
+                <h3 className="text-2xl font-bold text-background mb-6 text-center">
+                  Project Contributors
                 </h3>
-                <p className="text-background/80 mb-6">
-                  Experience enterprise-grade cybersecurity with no commitment required.
-                </p>
-                <SignedOut>
-                  <SignUpButton mode="modal">
-                    <Button variant="secondary" size="lg" className="w-full">
-                      Get Started Now
-                    </Button>
-                  </SignUpButton>
-                </SignedOut>
-                <SignedIn>
-                  <Link to="/dashboard">
-                    <Button variant="secondary" size="lg" className="w-full">
-                      Access Dashboard
-                    </Button>
-                  </Link>
-                </SignedIn>
+                <div className="space-y-3 text-background/90">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">1. Tridash Srivastav</span>
+                    <span className="text-background/70">(2205169)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">2. Shreyas Ekka</span>
+                    <span className="text-background/70">(2205675)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">3. Salbirong Chukande Cheran Momin</span>
+                    <span className="text-background/70">(2205410)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">4. Zails Pranav Kachhap</span>
+                    <span className="text-background/70">(2205260)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">5. Shaksham Saini</span>
+                    <span className="text-background/70">(2205156)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">6. Somsubhra Mukherjee</span>
+                    <span className="text-background/70">(2205683)</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

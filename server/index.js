@@ -669,6 +669,236 @@ app.post('/api/upload-logs', upload.array('logFiles', 10), async (req, res) => {
   }
 });
 
+// Enhanced threat analysis endpoint
+app.post('/api/enhance-threat', async (req, res) => {
+  try {
+    const { threat } = req.body;
+    
+    if (!threat) {
+      return res.status(400).json({ error: 'Threat data is required' });
+    }
+
+    // Enhanced AI analysis for individual threats
+    let detailedAnalysis;
+
+    if (openai) {
+      try {
+        const enhancementPrompt = `
+        Analyze this cybersecurity threat and provide detailed remediation information:
+        
+        Threat Type: ${threat.type}
+        Severity: ${threat.severity}
+        Description: ${threat.description}
+        Source: ${threat.source}
+        Target: ${threat.target}
+        Confidence: ${threat.confidence}%
+        
+        Please provide:
+        1. Is this fixable by a home user/basic IT team? (true/false)
+        2. Does it require cybersecurity experts? (true/false)
+        3. What ports/services are likely targeted? (array of port numbers/service names)
+        4. Step-by-step remediation instructions (array of strings)
+        5. Risk level assessment (Critical/High/Medium/Low)
+        6. Business impact assessment (High/Medium/Low)
+        7. Technical details explaining the threat mechanism
+        
+        Respond in this JSON format:
+        {
+          "isHomeFixable": boolean,
+          "requiresExpert": boolean,
+          "targetedPorts": ["port1", "port2"],
+          "remediationSteps": ["step1", "step2"],
+          "riskLevel": "string",
+          "businessImpact": "string",
+          "technicalDetails": "string"
+        }
+        `;
+
+        const response = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a cybersecurity expert providing detailed threat analysis and remediation advice. Always respond with valid JSON."
+            },
+            {
+              role: "user",
+              content: enhancementPrompt
+            }
+          ],
+          max_tokens: 1000,
+          temperature: 0.1
+        });
+
+        detailedAnalysis = JSON.parse(response.choices[0].message.content);
+      } catch (aiError) {
+        console.error('AI Enhancement Error:', aiError.message);
+        // Fallback to rule-based enhancement
+        detailedAnalysis = generateFallbackEnhancement(threat);
+      }
+    } else {
+      // Use fallback enhancement when OpenAI is not available
+      detailedAnalysis = generateFallbackEnhancement(threat);
+    }
+
+    res.json({
+      success: true,
+      detailedAnalysis: detailedAnalysis
+    });
+
+  } catch (error) {
+    console.error('Threat enhancement error:', error);
+    res.status(500).json({ 
+      error: 'Failed to enhance threat analysis',
+      detailedAnalysis: generateFallbackEnhancement(req.body.threat)
+    });
+  }
+});
+
+// Fallback threat enhancement function
+function generateFallbackEnhancement(threat) {
+  const threatType = threat.type.toLowerCase();
+  const severity = threat.severity.toLowerCase();
+  
+  // Rule-based enhancement logic
+  let isHomeFixable = false;
+  let requiresExpert = false;
+  let targetedPorts = ['Unknown'];
+  let remediationSteps = [];
+  let riskLevel = threat.severity;
+  let businessImpact = 'Medium';
+  let technicalDetails = '';
+
+  // Determine if home fixable based on threat type and severity
+  if (severity === 'low' || severity === 'medium') {
+    isHomeFixable = true;
+    requiresExpert = false;
+  } else if (severity === 'critical' || severity === 'high') {
+    isHomeFixable = false;
+    requiresExpert = true;
+  }
+
+  // Threat-specific enhancements
+  switch (true) {
+    case threatType.includes('malware'):
+      targetedPorts = ['443', '80', '445', '135', '139'];
+      technicalDetails = 'Malware detected through signature-based analysis. May include file system modification, network communication to C&C servers, and persistence mechanisms.';
+      remediationSteps = [
+        'Immediately isolate the affected system from the network',
+        'Run a full system antivirus scan with updated definitions',
+        'Check for unauthorized file modifications',
+        'Review network connections for suspicious outbound traffic',
+        'Update all software and operating system patches',
+        'Consider professional malware removal if critical severity'
+      ];
+      businessImpact = severity === 'critical' ? 'High' : 'Medium';
+      break;
+
+    case threatType.includes('ddos'):
+    case threatType.includes('dos'):
+      targetedPorts = ['80', '443', '53', '25'];
+      technicalDetails = 'Distributed Denial of Service attack detected through traffic pattern analysis. Involves overwhelming target resources with excessive requests.';
+      remediationSteps = [
+        'Enable DDoS protection on your router/firewall',
+        'Contact your ISP about DDoS mitigation services',
+        'Implement rate limiting on web services',
+        'Consider using a CDN service like Cloudflare',
+        'Monitor bandwidth usage and server resources',
+        'Document attack patterns for future reference'
+      ];
+      isHomeFixable = true;
+      requiresExpert = severity === 'critical';
+      break;
+
+    case threatType.includes('brute force'):
+    case threatType.includes('authentication'):
+      targetedPorts = ['22', '3389', '21', '23', '25'];
+      technicalDetails = 'Brute force attack detected through repeated authentication failure patterns. Attackers are attempting to guess credentials through automated tools.';
+      remediationSteps = [
+        'Immediately change passwords for targeted accounts',
+        'Enable account lockout policies',
+        'Implement two-factor authentication (2FA)',
+        'Review and strengthen password policies',
+        'Consider IP-based access restrictions',
+        'Monitor authentication logs regularly'
+      ];
+      isHomeFixable = true;
+      requiresExpert = false;
+      break;
+
+    case threatType.includes('injection'):
+    case threatType.includes('xss'):
+      targetedPorts = ['80', '443', '8080', '8443'];
+      technicalDetails = 'Code injection attack detected through input validation analysis. Attackers are attempting to inject malicious code into web applications.';
+      remediationSteps = [
+        'Immediately patch the vulnerable application',
+        'Review and strengthen input validation',
+        'Implement Web Application Firewall (WAF)',
+        'Conduct security audit of web applications',
+        'Update all web frameworks and libraries',
+        'Consider hiring security professionals for assessment'
+      ];
+      isHomeFixable = false;
+      requiresExpert = true;
+      businessImpact = 'High';
+      break;
+
+    case threatType.includes('data exfiltration'):
+    case threatType.includes('data theft'):
+      targetedPorts = ['443', '80', '21', '22', '25'];
+      technicalDetails = 'Data exfiltration attempt detected through unusual data transfer patterns. Sensitive information may be at risk of unauthorized access or theft.';
+      remediationSteps = [
+        'Immediately block suspicious network connections',
+        'Audit data access logs for unauthorized activity',
+        'Change all administrative passwords',
+        'Implement data loss prevention (DLP) tools',
+        'Review user access permissions and privileges',
+        'Contact cybersecurity experts immediately',
+        'Consider legal and compliance implications'
+      ];
+      isHomeFixable = false;
+      requiresExpert = true;
+      businessImpact = 'High';
+      break;
+
+    case threatType.includes('unauthorized access'):
+      targetedPorts = ['22', '3389', '443', '80'];
+      technicalDetails = 'Unauthorized access attempt detected through anomalous login patterns and privilege escalation indicators.';
+      remediationSteps = [
+        'Review all user accounts and access permissions',
+        'Change passwords for all administrative accounts',
+        'Enable detailed audit logging',
+        'Implement principle of least privilege',
+        'Review VPN and remote access configurations',
+        'Consider multi-factor authentication for all accounts'
+      ];
+      isHomeFixable = severity !== 'critical';
+      requiresExpert = severity === 'critical';
+      break;
+
+    default:
+      technicalDetails = 'General security threat detected through pattern analysis. Review system logs and implement standard security hardening measures.';
+      remediationSteps = [
+        'Review system and application logs',
+        'Update all software and security patches',
+        'Strengthen access controls and authentication',
+        'Monitor system for unusual activity',
+        'Consider professional security assessment'
+      ];
+      break;
+  }
+
+  return {
+    isHomeFixable,
+    requiresExpert,
+    targetedPorts,
+    remediationSteps,
+    riskLevel,
+    businessImpact,
+    technicalDetails
+  };
+}
+
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import CyberBackground from '@/components/ui/cyber-background'
 
 const Reports = () => {
   const reportTemplates = [
@@ -120,17 +121,18 @@ const Reports = () => {
         <RedirectToSignIn />
       </SignedOut>
       <SignedIn>
-        <div className="min-h-screen bg-background p-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Security Reports
-              </h1>
-              <p className="text-muted-foreground">
-                Generate and manage comprehensive security reports
-              </p>
-            </div>
+        <CyberBackground>
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
+                  Security Reports
+                </h1>
+                <p className="text-muted-foreground">
+                  Generate and manage comprehensive security reports
+                </p>
+              </div>
 
             {/* Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -312,8 +314,9 @@ const Reports = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+            </div>
           </div>
-        </div>
+        </CyberBackground>
       </SignedIn>
     </>
   )

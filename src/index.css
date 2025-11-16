@@ -114,3 +114,94 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Enhanced card styling for better contrast against cyber background */
+@layer components {
+  .card-enhanced {
+    @apply border-2 border-border/60 bg-card/98 backdrop-blur-md shadow-2xl;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .card-enhanced:hover {
+    @apply border-primary/40 shadow-primary/20;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Floating animations for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-delay-1 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float-delay-2 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-delay-3 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Matrix falling animation with fade effect */
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.4;
+  }
+  95% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float-delay-1 8s ease-in-out infinite 2s;
+}
+
+.animate-float-delay-2 {
+  animation: float-delay-2 7s ease-in-out infinite 4s;
+}
+
+.animate-float-delay-3 {
+  animation: float-delay-3 9s ease-in-out infinite 1s;
+}
+
+.animate-matrix-fall {
+  animation: matrix-fall linear infinite;
+}

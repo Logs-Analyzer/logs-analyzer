@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { useState, useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import CyberBackground from '@/components/ui/cyber-background'
 
 const Settings = () => {
   const { toast } = useToast()
@@ -205,28 +206,29 @@ const Settings = () => {
         <RedirectToSignIn />
       </SignedOut>
       <SignedIn>
-        <div className="min-h-screen bg-background p-6">
-          <div className="max-w-6xl mx-auto">
-            {/* Header */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-3">
-                    <SettingsIcon className="h-8 w-8 text-cyber-primary" />
-                    Settings
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Configure your LOGS ANALYZER security preferences and system behavior
-                  </p>
+        <CyberBackground>
+          <div className="p-6">
+            <div className="max-w-6xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-3">
+                      <SettingsIcon className="h-8 w-8 text-cyber-primary" />
+                      Settings
+                    </h1>
+                    <p className="text-muted-foreground">
+                      Configure your LOGS ANALYZER security preferences and system behavior
+                    </p>
+                  </div>
+                  {autoSave && (
+                    <Badge variant="outline" className="flex items-center gap-2">
+                      <RefreshCw className="h-3 w-3 animate-spin" />
+                      Auto-saving enabled
+                    </Badge>
+                  )}
                 </div>
-                {autoSave && (
-                  <Badge variant="outline" className="flex items-center gap-2">
-                    <RefreshCw className="h-3 w-3 animate-spin" />
-                    Auto-saving enabled
-                  </Badge>
-                )}
               </div>
-            </div>
 
             <Tabs defaultValue="general" className="space-y-6">
               <TabsList className="grid w-full grid-cols-7 lg:grid-cols-7">
@@ -1871,11 +1873,13 @@ const Settings = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+            </div>
           </div>
-        </div>
+        </CyberBackground>
       </SignedIn>
     </>
   )
 }
 
 export default Settings
+
