@@ -291,7 +291,10 @@ const Settings = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="timezone">Timezone</Label>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="timezone">Timezone</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <Select 
                           value={timezone} 
                           onValueChange={(value) => {
@@ -316,7 +319,10 @@ const Settings = () => {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="language">Language</Label>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="language">Language</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <Select 
                           value={language} 
                           onValueChange={(value) => {
@@ -350,7 +356,10 @@ const Settings = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="date-format">Date Format</Label>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="date-format">Date Format</Label>
+                        <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                      </div>
                       <Select 
                         value={dateFormat} 
                         onValueChange={(value) => {
@@ -540,7 +549,10 @@ const Settings = () => {
                     </div>
                     <Separator />
                     <div className="space-y-2">
-                      <Label htmlFor="accent-color">Accent Color</Label>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="accent-color">Accent Color</Label>
+                        <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                      </div>
                       <div className="grid grid-cols-6 gap-3">
                         <button 
                           aria-label="Blue theme" 
@@ -617,7 +629,10 @@ const Settings = () => {
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label>High Contrast Mode</Label>
+                        <div className="flex items-center gap-2">
+                          <Label>High Contrast Mode</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground">
                           Increase contrast for better visibility
                         </p>
@@ -630,7 +645,10 @@ const Settings = () => {
                     <Separator />
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label>Compact View</Label>
+                        <div className="flex items-center gap-2">
+                          <Label>Compact View</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground">
                           Show more content in less space
                         </p>
@@ -643,7 +661,10 @@ const Settings = () => {
                     <Separator />
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label>Animations</Label>
+                        <div className="flex items-center gap-2">
+                          <Label>Animations</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground">
                           Enable smooth animations and transitions
                         </p>
@@ -656,7 +677,10 @@ const Settings = () => {
                     <Separator />
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label>Show Grid Lines</Label>
+                        <div className="flex items-center gap-2">
+                          <Label>Show Grid Lines</Label>
+                          <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground">
                           Display grid lines on charts and graphs
                         </p>
@@ -675,7 +699,10 @@ const Settings = () => {
                     </div>
                     <Separator />
                     <div className="space-y-2">
-                      <Label htmlFor="sidebar-position">Sidebar Position</Label>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="sidebar-position">Sidebar Position</Label>
+                        <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                      </div>
                       <Select 
                         value={sidebarPosition} 
                         onValueChange={(value) => {
@@ -720,6 +747,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center space-x-2">
                       <Shield className="h-5 w-5" />
                       <span>Security Policies</span>
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       Configure security policies and threat detection settings
@@ -802,7 +830,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Security Modes</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Security Modes
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Choose your security posture and monitoring level
                     </CardDescription>
@@ -896,7 +927,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Access Control</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Access Control
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Manage user access and permissions
                     </CardDescription>
@@ -1013,7 +1047,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Encryption & Privacy</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Encryption & Privacy
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Configure data encryption and privacy settings
                     </CardDescription>
@@ -1112,6 +1149,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center space-x-2">
                       <Bell className="h-5 w-5" />
                       <span>Alert Preferences</span>
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       Configure how and when you receive security alerts
@@ -1230,7 +1268,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Notification Channels</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Notification Channels
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Configure notification delivery methods
                     </CardDescription>
@@ -1258,6 +1299,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center gap-2">
                       <Database className="h-5 w-5" />
                       Data Management
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       Manage your data, backups, and exports
@@ -1313,7 +1355,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Backup Settings</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Backup Settings
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Configure automatic backup preferences
                     </CardDescription>
@@ -1412,7 +1457,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Data Retention</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Data Retention
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Configure how long data is kept in the system
                     </CardDescription>
@@ -1495,7 +1543,10 @@ const Settings = () => {
               <TabsContent value="integrations" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>System Integrations</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      System Integrations
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Connect LOGS ANALYZER with your existing security tools
                     </CardDescription>
@@ -1553,6 +1604,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center gap-2">
                       <Zap className="h-5 w-5" />
                       API Configuration
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       Configure API access and authentication
@@ -1614,6 +1666,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center gap-2">
                       <Clock className="h-5 w-5" />
                       Performance Settings
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       Optimize system performance and resource usage
@@ -1694,6 +1747,7 @@ const Settings = () => {
                     <CardTitle className="flex items-center gap-2">
                       <FileText className="h-5 w-5" />
                       Audit & Logging
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20 ml-2">Under Maintenance</Badge>
                     </CardTitle>
                     <CardDescription>
                       System audit logs and activity tracking
@@ -1764,7 +1818,10 @@ const Settings = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Experimental Features</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      Experimental Features
+                      <Badge variant="outline" className="text-xs bg-yellow-500/10 text-yellow-500 border-yellow-500/20">Under Maintenance</Badge>
+                    </CardTitle>
                     <CardDescription>
                       Try out new features before they're officially released
                     </CardDescription>
